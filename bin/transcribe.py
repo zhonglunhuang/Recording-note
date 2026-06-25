@@ -26,7 +26,7 @@ def main():
 
     src = sys.argv[1]
     out_dir = sys.argv[2]
-    model_size = sys.argv[3] if len(sys.argv) > 3 else "medium"
+    model_size = sys.argv[3] if len(sys.argv) > 3 else "small"
 
     base = os.path.splitext(os.path.basename(src))[0]
     txt_path = os.path.join(out_dir, f"{base}.txt")

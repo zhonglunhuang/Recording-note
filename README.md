@@ -28,11 +28,12 @@ bash setup.sh
 
 ```bash
 bash run.sh 我的會議.mp4        # 只處理單一檔案
-MODEL=large-v3 bash run.sh      # 換更準的模型（較慢）
-MODEL=small bash run.sh         # 換更快的模型（較不準）
+MODEL=medium bash run.sh       # 換更準的模型（較慢）
+MODEL=large-v3 bash run.sh     # 最準（最慢）
 ```
 
-模型大小：`tiny < base < small < medium(預設) < large-v3`
+模型大小：`tiny < base < small(預設) < medium < large-v3`
+預設用 `small`（速度快、會議記錄通常夠用）；要更高準確度再換 `medium`／`large-v3`。
 越大越準但越慢，首次使用會自動下載模型。
 
 ## 產出的會議記錄包含

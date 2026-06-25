@@ -22,9 +22,9 @@
 3. **轉逐字稿**：
    ```bash
    source .venv/bin/activate
-   python bin/transcribe.py "<影片路徑>" output medium
+   python bin/transcribe.py "<影片路徑>" output small
    ```
-   長影片需耐心等候。模型可選 small（快）／medium（預設）／large-v3（準）。
+   長影片需耐心等候。模型可選 small（預設、快）／medium／large-v3（準）。
 4. **產出會議記錄**：依 `templates/summary-prompt.md` 的格式，由你自己把逐字稿整理成繁中會議記錄並輸出，存成 `output/<檔名>__會議記錄.md`。
 5. 完成後告知逐字稿與會議記錄的路徑，並可詢問是否要轉成 Word（.docx）交付。
 

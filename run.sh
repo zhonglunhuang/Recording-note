@@ -10,7 +10,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-MODEL="${MODEL:-medium}"
+MODEL="${MODEL:-small}"
 INPUT_DIR="input"
 OUTPUT_DIR="output"
 TEMPLATE="templates/summary-prompt.md"
