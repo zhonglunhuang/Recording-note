@@ -24,7 +24,14 @@
    source .venv/bin/activate
    python bin/transcribe.py "<影片路徑>" output small
    ```
-   長影片需耐心等候。模型可選 small（預設、快）／medium／large-v3（準）。
+   模型可選 small（預設、快）／medium／large-v3（準）。
+   - `transcribe.py` 會**邊辨識邊寫檔**（每 10 段 flush），中途若被中斷也能保留已完成進度。
+   - **長影片（>30 分鐘）務必用 nohup 脫離執行**，否則 agent 的背景任務跑太久會被環境回收、半途被 kill：
+     ```bash
+     nohup python -u bin/transcribe.py "<影片路徑>" output small > output/_transcribe.log 2>&1 &
+     disown
+     ```
+     之後用 `tail -3 output/_transcribe.log` 看進度（會顯示「已處理 N 段（約 X 分鐘）」），逐字稿 `.txt` 也會即時長出來。跑完再進步驟 4。
 4. **產出會議記錄**：依 `templates/summary-prompt.md` 的格式，由你自己把逐字稿整理成繁中會議記錄並輸出，存成 `output/<檔名>__會議記錄.md`。
 5. 完成後告知逐字稿與會議記錄的路徑，並可詢問是否要轉成 Word（.docx）交付。
 

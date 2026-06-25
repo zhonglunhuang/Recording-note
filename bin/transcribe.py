@@ -43,20 +43,21 @@ def main():
         initial_prompt="以下是一場軟體開發團隊的會議，內容為繁體中文，包含技術名詞、API、需求、排程與待辦事項。",
     )
 
-    plain_lines, srt_lines = [], []
-    for i, seg in enumerate(segments, 1):
-        text = seg.text.strip()
-        plain_lines.append(text)
-        srt_lines.append(
-            f"{i}\n{fmt_ts(seg.start)} --> {fmt_ts(seg.end)}\n{text}\n"
-        )
-        if i % 20 == 0:
-            print(f"   已處理 {i} 段...")
-
-    with open(txt_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(plain_lines))
-    with open(srt_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(srt_lines))
+    # 邊辨識邊寫檔，萬一中途被中斷也能保留已完成的進度
+    txt_f = open(txt_path, "w", encoding="utf-8")
+    srt_f = open(srt_path, "w", encoding="utf-8")
+    try:
+        for i, seg in enumerate(segments, 1):
+            text = seg.text.strip()
+            txt_f.write(text + "\n")
+            srt_f.write(f"{i}\n{fmt_ts(seg.start)} --> {fmt_ts(seg.end)}\n{text}\n\n")
+            if i % 10 == 0:
+                txt_f.flush()
+                srt_f.flush()
+                print(f"   已處理 {i} 段（約 {seg.end/60:.1f} 分鐘）...", flush=True)
+    finally:
+        txt_f.close()
+        srt_f.close()
 
     print(f"   逐字稿：{txt_path}")
     print(f"   字幕檔：{srt_path}")
